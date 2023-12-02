@@ -24,6 +24,9 @@ sed -i 's/'$current_theme'/"agnoster"/g'
 echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
 echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> ~/.bashrc
 
+# Install Powerline fonts
+sudo apt-get install -y font-powerline
+
 # Source updated Bash profile
 source .bashrc
 
