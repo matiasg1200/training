@@ -104,7 +104,7 @@ resource "aws_key_pair" "ec2_lab_key" {
 resource "aws_instance" "lab_instance" {
   ami = data.aws_ami.amazon_image.id
   instance_type = "t2.micro"
-  security_groups = [aws_security_group.allow_ssh.id]
+  vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   subnet_id = aws_subnet.public_subnet.id
   key_name = "ec2_lab_key"
   depends_on = [aws_internet_gateway.igw, aws_key_pair.ec2_lab_key]
