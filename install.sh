@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#####################################################
+# Script only for setting up a customized local env #
+# Installs:                                         #
+# - docker                                          #
+# - git                                             #
+# - tfenv                                           #
+# - tgenv                                           #
+# - Oh my bash                                      #
+# Add your user to sudoers before running           #
+#####################################################
+
+
 # Install git
 apt update 
 apt install -y git
