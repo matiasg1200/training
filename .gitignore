@@ -1,5 +1,8 @@
 token
 
+# Lock files
+**/.terraform.lock.*/*
+
 # Local .localstack directories
 **/.localstack/*
 
