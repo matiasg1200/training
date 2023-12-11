@@ -57,6 +57,7 @@ resource "aws_route_table_association" "rt-public_subnet" {
   route_table_id = aws_route_table.route.id
 }
 
+# Create security group to allow ssh traffic 
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow SSH inbound traffic"
@@ -100,7 +101,7 @@ resource "aws_key_pair" "ec2_lab_key" {
   public_key = tls_private_key.ec2_lab_key.public_key_openssh
 }
 
-# 
+# Create EC2 instance
 resource "aws_instance" "lab_instance" {
   ami = data.aws_ami.amazon_image.id
   instance_type = "t2.micro"
