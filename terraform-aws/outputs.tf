@@ -1,5 +1,9 @@
-output "AMI" {
-  value = data.aws_ami.amazon_image.id
+output "user" {
+  value = random_string.username.result
+}
+
+output "pwd" {
+  value = random_string.password.result
 }
 
 output "public_ip" {

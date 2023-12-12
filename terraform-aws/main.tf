@@ -101,12 +101,38 @@ resource "aws_key_pair" "ec2_lab_key" {
   public_key = tls_private_key.ec2_lab_key.public_key_openssh
 }
 
+# Create random string for username
+resource "random_string" "username" {
+  length           = 4
+  special          = false
+  min_numeric      = 4 
+}
+
+# Create random string for password
+resource "random_string" "password" {
+  length           = 8
+  special          = false
+  min_numeric      = 4
+}
+
 # Create EC2 instance
 resource "aws_instance" "lab_instance" {
   ami = data.aws_ami.amazon_image.id
   instance_type = "t2.micro"
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   subnet_id = aws_subnet.public_subnet.id
+  user_data = <<-EOF
+              #!/bin/bash
+
+              # Enable ssh password auth
+              sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+              systemctl restart sshd.service
+
+              # Create new lab user
+              useradd workshop-${random_string.username.result}
+              echo "workshop-${random_string.username.result}:${random_string.password.result}" | chpasswd
+
+              EOF
   key_name = "ec2_lab_key"
   depends_on = [aws_internet_gateway.igw, aws_key_pair.ec2_lab_key]
 }
