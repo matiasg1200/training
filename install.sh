@@ -17,9 +17,10 @@
 # - add symlink instead: ln -s ~/.tfenv/bin/* /usr/local/bin  #
 ###############################################################
 
-# Install git
-apt update 
-apt install -y git
+# Install git & curl
+sudo apt update 
+sudo apt install -y git
+sudo apt install -y curl
 
 # Create dirs for tfevn and tgenv
 mkdir .tfenv
@@ -29,17 +30,16 @@ mkdir .tgenv
 git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
 git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv
 
+# Add tfenv and tgenv to PATH
+echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> ~/.bashrc
+
 # Instll Oh my Bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 
 # Repleace default theme - optional
-current_theme=$(awk -F= '/^OSH_THEME/{print$2}' .bashrc)
-sed -i 's/'$current_theme'/"agnoster"/g'
-
-
-# Add tfenv and tgenv to PATH
-echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
-echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> ~/.bashrc
+current_theme=$(awk -F= '/^OSH_THEME/{print$2}' ~/.bashrc)
+sed -i 's/'$current_theme'/"agnoster"/g' ~/.bashrc
 
 # Install Powerline fonts
 sudo apt-get install -y fonts-powerline
